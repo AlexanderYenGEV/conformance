@@ -11,7 +11,6 @@ Feature: Provide forecast limits in appropriate formats
     Given a TROLIE client that has been authenticated as a Ratings Provider
 
   # GET Limits Forecast Snapshot
-  @lep
   Scenario Outline: Obtaining the latest forecast snapshot
     Given the Accept header is set to `<content_type>`
     When the client requests the current Forecast Limits Snapshot
@@ -133,24 +132,12 @@ Feature: Provide forecast limits in appropriate formats
       #| */* |
       #| application/vnd.trolie.forecast-limits-snapshot-slim.v1+json, limit-type=apparent-power |
       #| application/vnd.trolie.forecast-limits-snapshot-slim.v1+json; inputs-used=true; limit-type=apparent-power  |
-    
-  @test
-  Scenario Outline: Print Snapshot for psr header = false
-    Given the Accept header is set to `<content_type>`
-    When the client requests the current Forecast Limits Snapshot
-    Then the response is 200 OK
-    And print snapshot
-    Examples:
-      | content_type |
-      | application/vnd.trolie.forecast-limits-snapshot.v1+json |                           
-      | application/vnd.trolie.forecast-limits-snapshot.v1+json; include-psr-header=false |
 
   # GET Historical Limits Forecast Snapshot
-  @lep @forecast_snapshot
+  @forecast_snapshot
   Scenario Outline: Get historical limits forecast snapshot
     Given the Accept header is set to `<content_type>`
-    # Weird bug says step doesn't exist but it does 
-    # When the client requests a Historical Forecast Limits Snapshot at time frame <time_frame>
+    When the client requests a Historical Forecast Limits Snapshot at time frame <time_frame>
     When the client requests a Historical Forecast Limits Snapshot
     Then the response is 200 OK
     And the Content-Type header in the response is `<content_type>`
@@ -161,8 +148,7 @@ Feature: Provide forecast limits in appropriate formats
     | application/vnd.trolie.forecast-limits-snapshot.v1+json | 2025-07-12T03:00:00-05:00 |
 
   # GET Regional Limits Forecast Snapshot
-  @lep @forecast_snapshot
-  # It can't retrieve the snapshot created because the snapshot has not database to be stored into, it only retrieves the one existing
+  @forecast_snapshot
   Scenario Outline: Get regional limits forecast snapshot
     Given the Accept header is set to `<content_type>`
     When the client requests a Regional Forecast Limits Snapshot
@@ -179,13 +165,13 @@ Feature: Provide forecast limits in appropriate formats
     # | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json |
     # | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json; include-psr-header=false |
   
-  @lep @forecast_snapshot
+  @forecast_snapshot
   Scenario Outline: Sending a body with a GET Regional Limits Forecast Snapshot is a bad request
     Given the Accept header is set to `<content_type>`
     And the client has a non-empty body
     When the client requests a Regional Forecast Limits Snapshot
     Then the response is 400 Bad Request
-    # And the Content-Type header in the response is `application/vnd.trolie.error.v1+json`
+    And the Content-Type header in the response is `application/vnd.trolie.error.v1+json`
     And the response is schema-valid
 
     Examples: 
@@ -216,13 +202,13 @@ Feature: Provide forecast limits in appropriate formats
 
 
   # GET Obtain Forecast Proposal Status
-  @lep @forecast_proposal
+  @forecast_proposal
   Scenario Outline: Get the forecast proposal status 
     Given the Accept header is set to `<content_type>`
     When the client requests the status of a Forecast Proposal
     Then the response is 200 OK 
     And the Content-Type header in the response is `<content_type>`
-    # And the response is schema-valid
+    And the response is schema-valid
   
     
     Examples: 
@@ -230,7 +216,7 @@ Feature: Provide forecast limits in appropriate formats
     | application/vnd.trolie.rating-forecast-proposal-status.v1+json |
 
   # PATCH Submit a Forecast Proposal
-  @lep @forecast_proposal @test
+  @forecast_proposal 
   Scenario Outline: Submit a forecast proposal
     Given the Content-type header is set to `<response_type>`
     And the Accept header is set to `<content_type>`
