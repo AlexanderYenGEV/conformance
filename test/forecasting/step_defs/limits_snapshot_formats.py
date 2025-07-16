@@ -11,13 +11,11 @@ from test.forecasting.forecast_helpers import (
 def request_forecast_limits_snapshot(client: TrolieClient):
     return client.request("/limits/forecast-snapshot")
 
-# TEST
-@then("print snapshot")
+# Debugging purposes
 def print_snapshot(client: TrolieClient):
     print("Header: ", (client._TrolieClient__headers[Header.Accept]))
     print(json.dumps(get_forecast_limits_snapshot(client).get_json(), indent=2))
 
-@then("print forecast snapshot")
 def print_forecast_snapshot(client: TrolieClient):
     print("REQUEST BODY SENT: ", json.dumps(client._TrolieClient__body, indent=2))
     print("RESPONSE CONTENT-TYPE:", client._TrolieClient__response.headers.get("Content-type"))
@@ -25,7 +23,6 @@ def print_forecast_snapshot(client: TrolieClient):
     print("REQUEST BODY RECIEVED: ", json.dumps(client.get_json(), indent=2))
     print("\n")
 
-# Doesn't link properly
 @when("the client requests a Historical Forecast Limits Snapshot at time frame {time_frame}")
 def request_historical_forecast_limits_snapshot_at_period(client: TrolieClient, time_frame):
     return client.request(f"/limits/forecast-snapshot/{time_frame}")
