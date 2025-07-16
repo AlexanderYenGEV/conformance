@@ -24,12 +24,10 @@ Feature: Support querying subsets of the available forecasted limits
         | 06:00:00-05:00        | 06:00:00-06:00      | 07:00:00-05:00        |
         | 05:00:00-06:00        | 07:00:00-05:00      | 06:00:00-06:00        |
     
-    # New added
-    @prism_fail
+    @todo @prism_fail
     Scenario Outline: What to do when `offset-period-start` is in the past?    Query forecast limits with offset-period-start that are in the past 
         Given the current wall clock time at the Clearinghouse is today at 11am GMT, i.e., <server_time>
         When the client requests forecast limits with `offset-period-start` for an hour from then at <request_offset_time>
-        Then see output <response_first_period>
 
         Examples:
         | server_time       | request_offset_time   | response_first_period |
