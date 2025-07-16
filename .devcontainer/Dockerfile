@@ -24,11 +24,5 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && pip install --upgrade pip --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org \
     && pip install ipykernel jupyter --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
 
-#orignal
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-# && apt-get -y reinstall --no-install-recommends ca-certificates software-properties-common \
-# && pip install --upgrade pip \
-# && pip install ipykernel jupyter
-
 ADD https://github.com/stoplightio/prism/releases/download/v5.14.2/prism-cli-linux /usr/local/bin/prism
 RUN chmod +x /usr/local/bin/prism 
