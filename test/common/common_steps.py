@@ -32,9 +32,8 @@ def bad_query_parameters(client: TrolieClient):
 @given("the client has a non-empty body")
 def non_empty_body(client: TrolieClient):
     client.set_body({"key": "value"})
-    # client.set_header("Content-Type", "application/json")
+    client.set_header("Content-Type", "application/json")
 
-# New Added 
 @given(parsers.parse("the body is loaded from `{filename}`"))
 def set_body_from_file(client, filename):
     with open(filename, "r") as f:
