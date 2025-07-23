@@ -172,3 +172,24 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+.vscode/
+
+# Don't want to push my conformed pynb
+Forecasting_Conformance_Profile.ipynb
+
+.github/gpg.exe
+pytest.ini
+
+# lep changes don't push
+LEP_Changes_Needed.txt
+
+# Allure files
+allure-results/
+assets/
+
+# Init files
+test/__init__.py
+test/forecasting/__init__.py
+test/forecasting/step_defs/__init__.py
+test/common/__init__.py
