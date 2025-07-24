@@ -17,7 +17,7 @@ Feature: Caching of Forecast Limits Snapshots supporting conditional GET
         And the client has obtained the current Forecast Limits Snapshot with an ETag
         When the client immediately issues a conditional GET for the same resource
         Then the response is 304 Not Modified
-        And the the response is empty
+        And the response is empty
 
         Examples:
             | accept_header                                                                              | accept_encoding |

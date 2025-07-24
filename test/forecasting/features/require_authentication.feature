@@ -1,4 +1,4 @@
-@skip_rate_limiting @forecasting
+@skip_rate_limiting @forecasting @auth
 Feature: All Forecasting requests require authentication
   As a Clearinghouse Operator
   I want to ensure that requests that cannot be authenticated receive 401 Unauthorized
