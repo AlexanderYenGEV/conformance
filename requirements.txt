@@ -5,3 +5,6 @@ pre-commit
 ruff
 jsonschema==4.23.0
 openapi_schema_validator
+requests
+allure-pytest
+ipykernel
