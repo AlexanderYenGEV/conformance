@@ -8,7 +8,7 @@ base_time = get_todays_iso8601_for("11:00:00Z")
 
 @given("the client has obtained the current Forecast Limits Snapshot with an ETag", target_fixture="etag")
 def get_etag_for_forecast_limits_snapshot(client):
-    # client.set_server_time(base_time)
+    client.set_server_time(base_time)
     return get_etag(get_forecast_limits_snapshot(client))
 
 

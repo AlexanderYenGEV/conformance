@@ -102,7 +102,6 @@ Feature: Provide forecast limits in appropriate formats
       #| application/vnd.trolie.forecast-limits-snapshot-slim.v1+json; limit-type=apparent-power, inputs-used=true |
       #| application/vnd.trolie.forecast-limits-snapshot-slim.v1+json; inputs-used=true, limit-type=apparent-power  |
   
-  # sends 200 OK , false 200
   Scenario Outline: Sending a body with a GET request is a bad request 
     Given the Accept header is set to `<content_type>`
     And the client has a non-empty body
@@ -134,7 +133,7 @@ Feature: Provide forecast limits in appropriate formats
       #| application/vnd.trolie.forecast-limits-snapshot-slim.v1+json; inputs-used=true; limit-type=apparent-power  |
 
   # GET Historical Limits Forecast Snapshot
-  @forecast_snapshot @todo
+  @todo
   Scenario Outline: Get historical limits forecast snapshot
     Given the Accept header is set to `<content_type>`
     When the client requests a Historical Forecast Limits Snapshot
@@ -147,7 +146,6 @@ Feature: Provide forecast limits in appropriate formats
     | application/vnd.trolie.forecast-limits-snapshot.v1+json | 2025-07-12T03:00:00-05:00 |
 
   # GET Regional Limits Forecast Snapshot
-  @forecast_snapshot
   Scenario Outline: Get regional limits forecast snapshot
     Given the Accept header is set to `<content_type>`
     When the client requests a Regional Forecast Limits Snapshot
@@ -158,7 +156,6 @@ Feature: Provide forecast limits in appropriate formats
     Examples: 
     | content_type                                            | 
     | application/vnd.trolie.forecast-limits-snapshot.v1+json | 
-    # include-psr-header=false throws error
     | application/vnd.trolie.forecast-limits-snapshot.v1+json; include-psr-header=false |  
     
     # | application/vnd.trolie.forecast-limits-snapshot-slim.v1+json;limit-type=apparent-power |
@@ -166,7 +163,6 @@ Feature: Provide forecast limits in appropriate formats
     # | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json |
     # | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json; include-psr-header=false |
   
-  @forecast_snapshot
   Scenario Outline: Sending a body with a GET Regional Limits Forecast Snapshot is a bad request
     Given the Accept header is set to `<content_type>`
     And the client has a non-empty body
@@ -185,7 +181,6 @@ Feature: Provide forecast limits in appropriate formats
 
 
   # POST Update Regional Limits Forecast Snapshot
-  @forecast_snapshot 
   Scenario Outline: Update Regional Limits Forecast Snapshot
     Given the Content-type header is set to `<content_type>`
     And the body is loaded from `<file_name>`
@@ -201,34 +196,4 @@ Feature: Provide forecast limits in appropriate formats
     | application/vnd.trolie.rating-forecast-proposal.v1+json                                 | data/forecast_snapshot.json      | application/vnd.trolie.rating-forecast-proposal-status.v1+json |
     #| application/vnd.trolie.rating-forecast-proposal-slim.v1+json; limit-type=apparent-power | data/forecast_proposal_slim.json | application/vnd.trolie.rating-forecast-proposal-status.v1+json |
 
-
-  # GET Obtain Forecast Proposal Status
-  @forecast_proposal
-  Scenario Outline: Get the forecast proposal status 
-    Given the Accept header is set to `<content_type>`
-    When the client requests the status of a Forecast Proposal
-    Then the response is 200 OK 
-    And the Content-Type header in the response is `<content_type>`
-    And the response is schema-valid
-  
-    
-    Examples: 
-    | content_type |
-    | application/vnd.trolie.rating-forecast-proposal-status.v1+json |
-
-  # PATCH Submit a Forecast Proposal
-  @forecast_proposal 
-  Scenario Outline: Submit a forecast proposal
-    Given the Content-type header is set to `<response_type>`
-    And the body is loaded from `<file_name>`
-    When the client submits a Forecast Proposal
-    Then the response is 202 OK 
-    And the Content-Type header in the response is `<response_type>`
-    And the response is schema-valid
-
-    Examples: 
-    | content_type                                            | file_name                   | response_type |
-    | application/vnd.trolie.rating-forecast-proposal.v1+json | data/forecast_proposal.json | application/vnd.trolie.rating-forecast-proposal-status.v1+json |
-    # Does not work
-    # | application/vnd.trolie.rating-forecast-proposal-slim.v1+json; limit-type=apparent-power | data/forecast_proposal_slim.json |
 

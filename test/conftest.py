@@ -9,11 +9,7 @@ from glob import glob
 # we need to help pytest-bdd find the step definitions. The simplest way to do this is
 # get them loaded via the pytest_plugins.
 # https://gist.github.com/peterhurford/09f7dcda0ab04b95c026c60fa49c2a68?permalink_comment_id=3453153#gistcomment-3453153
-# pytest_plugins = [
-#     fixture.replace("/", ".").replace(".py", "")
-#     for fixture in glob("test/**/step_defs/*.py")
-#     if "__" not in fixture
-# ] + ["test.common.common_steps"]
+
 pytest_plugins = [
     fixture.replace("\\", ".").replace("/", ".").replace(".py", "")
     for fixture in glob("test/**/step_defs/*.py", recursive=True)

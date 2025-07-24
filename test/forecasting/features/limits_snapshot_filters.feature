@@ -23,8 +23,6 @@ Feature: Support querying subsets of the available forecasted limits
         | server_time           | request_offset_time | response_first_period |
 
         | 15:00:00-05:00 | 17:00:00-05:00      | 17:00:00-05:00     |
-        # | 06:00:00-05:00        | 06:00:00-06:00      | 07:00:00-05:00        |
-        # | 05:00:00-06:00        | 07:00:00-05:00      | 06:00:00-06:00        |
     
     @todo
     Scenario: What to do when `offset-period-start` is in the past?
@@ -38,14 +36,13 @@ Feature: Support querying subsets of the available forecasted limits
         Examples:
         | server_time            | request_last_period  | response_last_period |
         | 18:35:45-05:00 | 14:00:00-05:00      | 14:00:00-05:00     |
-        # | 06:00:00-05:00         | 09:00:00-06:00       | 10:00:00-05:00       |
-
+        
     Scenario Outline: Query forecast limits with monitoring-set filter
         When the client requests forecast limits with monitoring-set filter <monitoring_set_id>
         Then the response should include forecast limits for the monitoring set <monitoring_set_id>
         Examples:
         | monitoring_set_id |
-        | TO1         |
+        | default   |
 
     @requires_model  
     Scenario Outline: Query forecast limits with resource-id filter
@@ -69,8 +66,7 @@ Feature: Support querying subsets of the available forecasted limits
         
         Examples:
         | server_time    | period_requested          | request_offset_time  | response_first_period |
-        # | 18:35:45-05:00 | 14:00:00-05:00      | 14:00:00-05:00     |
-        # | 06:00:00-05:00 | 2023-07-12T16:00:00-07:00 | 09:00:00-06:00       | 10:00:00-05:00        |
+        | 18:00:00-05:00 | 14:00:00-05:00      | 14:00:00-05:00     |
 
     
     Scenario Outline: Query historical limits forecast snapshots with period-end
@@ -114,7 +110,7 @@ Feature: Support querying subsets of the available forecasted limits
         Examples:
         | server_time    | request_offset_time | response_first_period |
         | 18:35:45-05:00 | 14:00:00-05:00      | 14:00:00-05:00     |
-        # | 05:00:00-06:00 | 07:00:00-05:00      | 06:00:00-06:00        |
+
     
     Scenario Outline: Query regional limits forecast snapshots with period-end
         Given the current wall clock time at the Clearinghouse is today at 11am GMT, i.e., <server_time>
@@ -123,9 +119,8 @@ Feature: Support querying subsets of the available forecasted limits
 
         Examples:
         | server_time | request_last_period | response_last_period |
-        | 18:35:45-05:00 | 14:00:00-05:00      | 14:00:00-05:00     |
-        # | 06:00:00-05:00 | 06:00:00-06:00      | 07:00:00-05:00        |
-        # | 05:00:00-06:00 | 07:00:00-05:00      | 06:00:00-06:00        |
+        | 18:00:00-05:00 | 14:00:00-05:00      | 14:00:00-05:00     |
+  
     
     Scenario Outline: Query regional limits forecast snapshots with monitoring-set 
         When the client requests regional forecast limits with monitoring-set filter <monitoring_set_id>

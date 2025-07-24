@@ -175,14 +175,8 @@ cython_debug/
 
 .vscode/
 
-# Don't want to push my conformed pynb
-Forecasting_Conformance_Profile.ipynb
-
 .github/gpg.exe
 pytest.ini
-
-# lep changes don't push
-LEP_Changes_Needed.txt
 
 # Allure files
 allure-results/

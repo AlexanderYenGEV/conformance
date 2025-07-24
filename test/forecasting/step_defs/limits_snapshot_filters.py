@@ -147,15 +147,5 @@ def forecast_snapshot_contains_requested_resource(resource_id, client: TrolieCli
     resources = client.get_json()["snapshot-header"]["power-system-resources"]
     assert resource_id in [resource["resource-id"] for resource in resources], f"Failed for resource {resource_id}"
 
-#todo
-@then(parsers.parse("see output {response_first_period}"))
-def forecase_snapshot_request_past_period(response_first_period, client: TrolieClient):
-    expected_start = get_todays_iso8601_for(response_first_period)
-    print("Expected value: ", expected_start)
-    limits = client.get_json()["limits"]
-    print(limits)
-    targets = ((entry["resource-id"], entry["periods"][0]["period-start"]) for entry in limits)
-    for resource_id, period_start in targets:
-        assert expected_start == period_start, f"Failed for resource {resource_id}"
 
 
