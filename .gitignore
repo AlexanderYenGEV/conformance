@@ -182,8 +182,5 @@ pytest.ini
 allure-results/
 assets/
 
-# Init files
-test/__init__.py
-test/forecasting/__init__.py
-test/forecasting/step_defs/__init__.py
-test/common/__init__.py
+# Local pynb
+Local_Conformance_Profile.ipynb

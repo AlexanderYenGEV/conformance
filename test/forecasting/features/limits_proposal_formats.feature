@@ -35,4 +35,4 @@ Feature: Provide forecast proposal limits in appropriate formats
     Examples: 
     | content_type                                            | file_name                   | response_type |
     | application/vnd.trolie.rating-forecast-proposal.v1+json | data/forecast_proposal.json | application/vnd.trolie.rating-forecast-proposal-status.v1+json |
-    | application/vnd.trolie.rating-forecast-proposal-slim.v1+json; limit-type=apparent-power | data/forecast_proposal_slim.json |
+

@@ -3,6 +3,8 @@ from test.helpers import TrolieClient, get_period
 
 
 def get_forecast_limits_snapshot(client: TrolieClient):
+    response = client.request("/limits/forecast-snapshot")
+    print("Status Code:", response.get_status_code())
     return client.request("/limits/forecast-snapshot")
 
 def get_regional_limits_forecast_snapshot(client: TrolieClient):

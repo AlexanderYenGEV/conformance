@@ -1,4 +1,5 @@
 import json
+from xmlrpc import client
 from pytest_bdd import given, when, then, parsers
 from dateutil import parser
 from test.helpers import TrolieClient
@@ -103,7 +104,6 @@ def regional_forecast_snapshot_request_filter_resource_id(resource_id, client: T
 @then(parsers.parse("the response should only include forecast limits starting at the `offset-period-start` in the server's time zone, i.e., {response_first_period}"))
 def forecast_snapshot_request_first_period_starts_on(response_first_period, client: TrolieClient):
     expected_start = get_todays_iso8601_for(response_first_period)
-    # print(client.get_json())
     limits = client.get_json()["limits"]
     targets = ((entry["resource-id"], entry["periods"][0]["period-start"]) for entry in limits)
     for resource_id, period_start in targets:

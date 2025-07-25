@@ -60,12 +60,11 @@ Feature: Support querying subsets of the available forecasted limits
     # Query parameters for : GET Historical Limits Forecast Snapshot  
     Scenario Outline: Query historical limits forecast snapshots with offset-period-start
         Given the current wall clock time at the Clearinghouse is today at 11am GMT, i.e., <server_time> 
-        # And the period requested is set to <period_requested>
         When the client requests historical forecast limits with `offset-period-start` for an hour from then at <request_offset_time>
         Then the response should only include forecast limits starting at the `offset-period-start` in the server's time zone, i.e., <response_first_period>
         
         Examples:
-        | server_time    | period_requested          | request_offset_time  | response_first_period |
+        | server_time    | request_offset_time  | response_first_period |
         | 18:00:00-05:00 | 14:00:00-05:00      | 14:00:00-05:00     |
 
     
