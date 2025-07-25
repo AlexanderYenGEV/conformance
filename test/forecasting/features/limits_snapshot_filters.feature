@@ -65,7 +65,7 @@ Feature: Support querying subsets of the available forecasted limits
         Then the response should only include forecast limits starting at the `offset-period-start` in the server's time zone, i.e., <response_first_period>
         
         Examples:
-        | server_time    | period_requested          | request_offset_time  | response_first_period |
+        | server_time    | request_offset_time  | response_first_period |
         | 18:00:00-05:00 | 14:00:00-05:00      | 14:00:00-05:00     |
 
     
