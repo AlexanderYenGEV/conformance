@@ -25,7 +25,7 @@ Feature: Provide forecast proposal limits in appropriate formats
 
   # PATCH Submit a Forecast Proposal
   Scenario Outline: Submit a forecast proposal
-    Given the Content-type header is set to `<response_type>`
+    Given the Content-type header is set to `<content_type>`
     And the body is loaded from `<file_name>`
     When the client submits a Forecast Proposal
     Then the response is 202 OK 

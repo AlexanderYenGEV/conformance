@@ -184,3 +184,7 @@ assets/
 
 # Local pynb
 Local_Conformance_Profile.ipynb
+
+# Test data files
+data/forecast_proposal.json
+data/forecast_snapshot.json

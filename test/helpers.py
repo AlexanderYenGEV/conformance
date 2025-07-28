@@ -110,6 +110,12 @@ class TrolieClient:
 
     def response_is_empty(self) -> bool:
         return len(self.__response.content) == 0
+    
+    def get_body(self):
+        return self.__body
+
+    def get_header(self, key: Header) -> dict:
+        return self.__headers[key] 
 
     @dataclass
     class ResponseInfo:
@@ -125,7 +131,7 @@ class TrolieClient:
                 nfo = self.ResponseInfo(
                     verb=self.__response.request.method,
                     relative_path=self.__relative_path,
-                    content_type=content_type,
+                    content_type=content_type.replace(" ", "").replace(";", "; "),
                     status_code=str(self.get_status_code()),
                     body=self.get_json(),
                 )
