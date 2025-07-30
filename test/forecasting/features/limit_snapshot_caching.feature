@@ -1,4 +1,4 @@
-@forecasting
+@forecasting 
 Feature: Caching of Forecast Limits Snapshots supporting conditional GET
 
     As a Clearinghouse Operator
@@ -47,7 +47,7 @@ Feature: Caching of Forecast Limits Snapshots supporting conditional GET
         Then the server should respond with a 200 OK status code
         And the response should be schema valid
 
-    @prism_fail
+    @prism_fail 
     Scenario Outline: ETag changes when data is updated
         Given the Accept header is set to `<content_type>`
         And the client has obtained the current Forecast Limits Snapshot with an ETag
