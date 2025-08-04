@@ -1,5 +1,6 @@
 from datetime import datetime
 from test.helpers import TrolieClient, get_period, warning
+from datetime import timedelta, timezone
 
 
 def get_forecast_limits_snapshot(client: TrolieClient):
@@ -36,3 +37,14 @@ def get_etag(client: TrolieClient):
         warning(f"Expected strong ETag, got weak ETag")
         etag = etag[2:]  # Remove the weak ETag prefix
     return etag
+
+def get_next_available_window(now=None):
+    if now is None:
+        now = datetime.now(timezone.utc)
+    # Round up to the next hour
+    next_hour = (now + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
+    cutoff = next_hour - timedelta(minutes=15)
+    if now < cutoff:
+        return next_hour
+    else:
+        return (next_hour + timedelta(hours=1))

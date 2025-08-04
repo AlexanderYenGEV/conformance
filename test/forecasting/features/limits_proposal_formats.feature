@@ -23,16 +23,16 @@ Feature: Provide forecast proposal limits in appropriate formats
     | content_type |
     | application/vnd.trolie.rating-forecast-proposal-status.v1+json |
 
-  # PATCH Submit a Forecast Proposal
+  # PATCH Submit a Forecast Proposal 
   Scenario Outline: Submit a forecast proposal
     Given the Content-type header is set to `<content_type>`
-    And the body is loaded from `<file_name>`
+    And the forecast proposal is generated for the current time
     When the client submits a Forecast Proposal
     Then the response is 202 OK 
     And the Content-Type header in the response is `<response_type>`
     And the response is schema-valid
 
     Examples: 
-    | content_type                                            | file_name                   | response_type |
-    | application/vnd.trolie.rating-forecast-proposal.v1+json | data/forecast_proposal.json | application/vnd.trolie.rating-forecast-proposal-status.v1+json |
+    | content_type                                            | response_type |
+    | application/vnd.trolie.rating-forecast-proposal.v1+json | application/vnd.trolie.rating-forecast-proposal-status.v1+json |
 

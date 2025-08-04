@@ -22,6 +22,7 @@ def set_accept_encoding_header(compression_type, client):
 
 @given(parsers.parse("the Content-type header is set to `{content_type}`"))
 def set_content_header(content_type, client):
+    print("Content-Type: ", content_type)
     client.set_header(Header.ContentType, content_type)
 
 @given("the client has bad query parameters")
