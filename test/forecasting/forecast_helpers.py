@@ -1,5 +1,5 @@
 from datetime import datetime
-from test.helpers import TrolieClient, get_period
+from test.helpers import TrolieClient, get_period, warning
 
 
 def get_forecast_limits_snapshot(client: TrolieClient):
@@ -32,4 +32,7 @@ def get_etag(client: TrolieClient):
     assert etag is not None and client.get_status_code() == 200
     # Verify ETag is not a weak ETag
     # assert not etag.startswith('W/"'), "Expected strong ETag, got weak ETag"
+    if etag.startswith('W/"'):
+        warning(f"Expected strong ETag, got weak ETag")
+        etag = etag[2:]  # Remove the weak ETag prefix
     return etag

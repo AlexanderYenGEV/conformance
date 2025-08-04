@@ -1,4 +1,4 @@
-@forecasting 
+@forecasting @caching
 Feature: Caching of Forecast Limits Snapshots supporting conditional GET
 
     As a Clearinghouse Operator
@@ -40,12 +40,18 @@ Feature: Caching of Forecast Limits Snapshots supporting conditional GET
         | application/vnd.trolie.forecast-limits-snapshot-slim.v1+json; limit-type=apparent-power | application/vnd.trolie.forecast-limits-snapshot-slim.v1+json; limit-type=apparent-power; inputs-used=true |
         | application/vnd.trolie.forecast-limits-snapshot.v1+json                                 | application/vnd.trolie.forecast-limits-snapshot.v1+json; include-psr-header=false                         |
 
-    @todo
     Scenario Outline: Unknown ETag in conditional request results in 200 OK
         Given the Accept header is set to `<accept_header>`
         When the client requests the Forecast Limits Snapshot with an unknown If-None-Match header
-        Then the server should respond with a 200 OK status code
-        And the response should be schema valid
+        Then the response is 200 OK
+        And the response is schema-valid
+
+        Examples:
+            | accept_header |
+            | application/vnd.trolie.forecast-limits-snapshot.v1+json |
+            | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json |
+            | application/vnd.trolie.forecast-limits-snapshot.v1+json; include-psr-header=false |
+            | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json; include-psr-header=false |
 
     @prism_fail 
     Scenario Outline: ETag changes when data is updated
