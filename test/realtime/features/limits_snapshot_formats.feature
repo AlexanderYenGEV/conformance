@@ -38,12 +38,12 @@ Feature: Provide real-time limits in appropriate formats
 
         Examples:
         | content_type |
-        | application/vnd.trolie.realtime-regional-limits-snapshot.v1+json |
-        | application/vnd.trolie.realtime-regional-limits-detailed-snapshot.v1+json |
-        | application/vnd.trolie.realtime-regional-limits-snapshot.v1+json; include-psr-header=false |
-        | application/vnd.trolie.realtime-regional-limits-detailed-snapshot.v1+json; include-psr-header=false |
-        | application/vnd.trolie.realtime-regional-limits-snapshot-slim.v1+json; limit-type=apparent-power |
-        | application/vnd.trolie.realtime-regional-limits-snapshot-slim.v1+json; limit-type=apparent-power; inputs-used=true |
+        | application/vnd.trolie.realtime-limits-snapshot.v1+json |
+        | application/vnd.trolie.realtime-limits-detailed-snapshot.v1+json |
+        | application/vnd.trolie.realtime-limits-snapshot.v1+json; include-psr-header=false |
+        | application/vnd.trolie.realtime-limits-detailed-snapshot.v1+json; include-psr-header=false |
+        | application/vnd.trolie.realtime-limits-snapshot-slim.v1+json; limit-type=apparent-power |
+        | application/vnd.trolie.realtime-limits-snapshot-slim.v1+json; limit-type=apparent-power; inputs-used=true |
 
        
 
