@@ -182,5 +182,3 @@ pytest.ini
 allure-results/
 assets/
 
-# Local pynb
-Local_Conformance_Profile.ipynb
