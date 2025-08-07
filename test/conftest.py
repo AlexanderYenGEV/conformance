@@ -8,7 +8,8 @@ from glob import glob
 
 pytest_plugins = [
     "test.common.common_steps",
-    "test.forecasting.step_defs"
+    "test.forecasting.step_defs",
+    "test.realtime.step_defs",
 ]
 
 
