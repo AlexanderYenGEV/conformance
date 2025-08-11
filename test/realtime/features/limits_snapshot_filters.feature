@@ -12,13 +12,17 @@ Feature: Support querying subsets of the available real-time limits
         And the Accept header is set to `application/vnd.trolie.realtime-limits-snapshot.v1+json`
 
     # GET Limits Real-Time Snapshot
+
+    @todo
+    Scenario Outline: Query limits real-time snapshot with default monitoring-set
+
     Scenario Outline: Query limits real-time snapshot with monitoring-set filter
         When the client requests a real-time limits snapshot with monitoring-set filter <monitoring_set>
         Then the response should include real-time limits snapshot for the monitoring-set <monitoring_set>
 
         Examples:
         | monitoring_set |
-        | default |
+        | default | 
     
     Scenario Outline: Query limits real-time snapshot with resource-id filter
         When the client requests a real-time limits snapshot with resource-id filter <resource_id>
@@ -30,6 +34,10 @@ Feature: Support querying subsets of the available real-time limits
         | PARKHILL.T5.T5 |
     
     # GET Regional Limits Real-Time Snapshot
+
+    @todo
+    Scenario Outline: Query limits real-time snapshot with default monitoring-set
+    
     Scenario Outline: Query regional limits real-time snapshot with monitoring-set filter
         When the client requests a regional limits real-time snapshot with monitoring-set filter <monitoring_set>
         Then the response should include regional limits real-time snapshot for the monitoring-set <monitoring_set>
