@@ -14,3 +14,9 @@ def get_etag(client: TrolieClient):
         warning(f"Expected strong ETag {strong_etag}, got weak ETag {etag}")
         etag = strong_etag
     return etag
+
+def get_limits_realtime_snapshot(client: TrolieClient):
+    return client.request("/limits/realtime-snapshot")
+
+def get_regional_limits_realtime_snapshot(client: TrolieClient):
+    return client.request("/limits/regional/realtime-snapshot")
