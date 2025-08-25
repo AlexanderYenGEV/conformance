@@ -20,6 +20,12 @@ def set_accept_encoding_header(compression_type, client):
     client.set_header(Header.Accept_Encoding, compression_type)
 
 
+@given(parsers.parse("the Content-type header is set to `{content_type}`"))
+def set_content_header(content_type, client):
+    print("Content-Type: ", content_type)
+    client.set_header(Header.ContentType, content_type)
+
+
 @given("the client has bad query parameters")
 def bad_query_parameters(client: TrolieClient):
     client.set_query_param("bad", "value")
@@ -35,9 +41,17 @@ def non_empty_body(client: TrolieClient):
 def request_forecast_limits_snapshot(client: TrolieClient):
     assert client.get_status_code() == 200
 
+@then("the response is 201 OK")
+def request_forecast_limits_snapshot(client: TrolieClient):
+    assert client.get_status_code() == 201
+
 @then("the response is 202 OK")
 def response_is_202(client: TrolieClient):
     assert client.get_status_code() == 202
+
+@then("the response is 204 OK")
+def response_is_202(client: TrolieClient):
+    assert client.get_status_code() == 204
 
 @then("the response is 304 Not Modified")
 def request_forecast_limits_snapshot_304(client: TrolieClient):
@@ -60,6 +74,11 @@ def request_forecast_limits_snapshot_415(client: TrolieClient):
 def request_forecast_limits_snapshot_406(client: TrolieClient):
     assert client.get_status_code() == 406
 
+@then("the response is 409 Conflict: Temporary AAR Exception in use")
+@then("the response is 409 Conflict: Temporary AAR Exception in the past")
+@then("the response is 409 Conflict: Temporary AAR Exception has overlapping times")
+def response_is_409(client: TrolieClient):
+    assert client.get_status_code() == 409
 
 @then("the response is schema-valid")
 def valid_snapshot(client: TrolieClient):
