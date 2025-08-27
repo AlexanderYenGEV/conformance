@@ -1,9 +1,33 @@
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
-from test.helpers import TrolieClient
-import os
+from test.helpers import TrolieClient, Role
+import os, pytest
 
 timezone = os.getenv("TZ")
+
+@pytest.fixture(scope="session")
+def preload_temporary_aar_exception_data_helper():
+    resources = ["HEARN.34562.1", "PARKHILL.T5.T5"]
+    created_ids = []
+    client = TrolieClient(role=Role.RATINGS_PROVIDER)
+    for resource_id in resources:
+        for offset in range(5):
+            start_time = datetime.now(ZoneInfo(timezone)).replace(minute=0, second=0, microsecond=0) + timedelta(days=1, hours=offset) # Gets the time 24 hours from now rounded down
+            end_time = start_time + timedelta(hours=1)
+            body = generate_temporary_aar_exception_helper(start_time, end_time, "Query Temporary AAR Exceptions", resource_id)
+            client.set_body(body)
+
+            client.set_header("Content-Type", "application/vnd.trolie.temporary-aar-exception.v1+json")
+            client.request("/temporary-aar-exceptions", method="POST")
+
+            created_ids.append(client.get_json()["id"])
+
+    print("ID's created: ", created_ids)    
+    yield created_ids
+
+    for ids in created_ids:
+        client.request(f"/temporary-aar-exceptions/{ids}", method="DELETE")
+
 
 def generate_temporary_aar_exception_helper(start_time, end_time, reason, resource_id):
     response = {
