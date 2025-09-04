@@ -20,6 +20,10 @@ def set_accept_header(content_type, client):
 def set_accept_encoding_header(compression_type, client):
     client.set_header(Header.Accept_Encoding, compression_type)
 
+@given(parsers.parse("the Content-type header is set to `{request_type}`"))
+def set_content_header(request_type, client):
+    client.set_header(Header.ContentType, request_type)
+
 @given(parsers.parse("the Content-type header is set to `{content_type}`"))
 def set_content_header(content_type, client):
     print("Content-Type: ", content_type)
@@ -87,6 +91,6 @@ def empty_response(client: TrolieClient):
     assert client.response_is_empty()
 
 
-@then(parsers.parse("the Content-Type header in the response is `{content_type}`"))
+@then(parsers.parse("the Content-Type header of the response is `{content_type}`"))
 def content_type_header(content_type, client):
     assert content_type == client.get_response_header(Header.ContentType).replace(" ", "").replace(";", "; ")

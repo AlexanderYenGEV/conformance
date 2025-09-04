@@ -5,16 +5,11 @@ from test.helpers import Role, TrolieClient
 
 from glob import glob
 
-# In order to organize the conformance tests into different "profiles", i.e., forecasting, realtime, seasonal, and peering,
-# we need to help pytest-bdd find the step definitions. The simplest way to do this is
-# get them loaded via the pytest_plugins.
-# https://gist.github.com/peterhurford/09f7dcda0ab04b95c026c60fa49c2a68?permalink_comment_id=3453153#gistcomment-3453153
-
 pytest_plugins = [
-    fixture.replace("\\", ".").replace("/", ".").replace(".py", "")
-    for fixture in glob("test/**/step_defs/*.py", recursive=True)
-    if "__" not in fixture
-] + ["test.common.common_steps"]
+    "test.common.common_steps",
+    "test.forecasting.step_defs"
+]
+
 
 
 def pytest_bdd_apply_tag(tag, function):

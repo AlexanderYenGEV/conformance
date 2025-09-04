@@ -117,6 +117,9 @@ class TrolieClient:
     def get_header(self, key: Header) -> dict:
         return self.__headers[key] 
 
+    def get_server_time(self): 
+        return self.__headers["X-TROLIE-Testing-Current-DateTime"]
+
     @dataclass
     class ResponseInfo:
         verb: str

@@ -1,7 +1,5 @@
-from datetime import datetime
 from test.helpers import TrolieClient, get_period, warning
-from datetime import timedelta, timezone
-
+from datetime import datetime, timedelta, timezone
 
 def get_forecast_limits_snapshot(client: TrolieClient):
     response = client.request("/limits/forecast-snapshot")
@@ -23,6 +21,10 @@ def get_todays_iso8601_for(time_with_timezone: str) -> str:
         raise ValueError(f"Invalid ISO8601 format: {iso8601_offset}")
     return iso8601_offset
 
+def round_up_to_next_hour(dt: datetime) -> datetime:
+    if dt.minute == 0 and dt.second == 0 and dt.microsecond == 0:
+        return dt
+    return (dt + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
 
 def get_etag(client: TrolieClient):
     etag = client.get_response_header("ETag")
