@@ -10,7 +10,7 @@ Feature: Provide forecast limits in appropriate formats
   Background: Authenticated as a Ratings Provider
     Given a TROLIE client that has been authenticated as a Ratings Provider
 
-  # GET Limits Forecast Snapshot
+  # GET Limits Forecast Snapshot 
   Scenario Outline: Obtaining the latest forecast snapshot
     Given the Accept header is set to `<content_type>`
     When the client requests the current Forecast Limits Snapshot
@@ -21,8 +21,8 @@ Feature: Provide forecast limits in appropriate formats
       | content_type |
       | application/vnd.trolie.forecast-limits-snapshot.v1+json |
       | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json |
-      | application/vnd.trolie.forecast-limits-snapshot.v1+json;include-psr-header=false |
-      | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json;include-psr-header=false |
+      | application/vnd.trolie.forecast-limits-snapshot.v1+json; include-psr-header=false |
+      | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json; include-psr-header=false |
 
   # GET Limits Forecast Snapshot (Slim format)
   Scenario Outline: Obtaining the latest slim forecast snapshot

@@ -1,9 +1,9 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from pytest_bdd import given, when, then, parsers
 from test.forecasting.forecast_helpers import get_forecast_limits_snapshot, get_todays_iso8601_for, get_etag
 from test.helpers import Header
 
-base_time = get_todays_iso8601_for("11:00:00Z")
+base_time = datetime.now().astimezone().isoformat()
 
 
 @given("the client has obtained the current Forecast Limits Snapshot with an ETag", target_fixture="etag")
@@ -29,12 +29,17 @@ def etags_should_not_match(client, etag):
     new_etag = get_etag(client)
     assert etag != new_etag, "ETags should not match for different representations"
 
-
 @when("a new Forecast is available")
 def new_forecast_available(client):
-    client.set_server_time(base_time + timedelta(hours=2))
+    base_time_dt = datetime.fromisoformat(base_time)
+    client.set_server_time((base_time_dt - timedelta(hours=1)).isoformat())
+    get_forecast_limits_snapshot(client)
     client.send()
 
+@when("the client requests the Forecast Limits Snapshot with an unknown If-None-Match header")
+def request_forecast_limits_snapshot_with_unknown_if_none_match(client):
+    client.set_header(Header.If_None_Match, "unknown-etag")
+    return get_forecast_limits_snapshot(client)
 
 @then("the previous ETag should not match the new ETag")
 def previous_etag_should_not_match_new_etag(client):

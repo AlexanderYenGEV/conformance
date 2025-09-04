@@ -82,7 +82,6 @@ Feature: Support querying subsets of the available forecasted limits
         | 1             |
         | 5             |
         | 7             |
-
     
     Scenario Outline: Query historical limits forecast snapshots with period-end
         Given the current wall clock time at the Clearinghouse today is set to the user's current time

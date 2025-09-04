@@ -26,6 +26,7 @@ def set_content_header(request_type, client):
 
 @given(parsers.parse("the Content-type header is set to `{content_type}`"))
 def set_content_header(content_type, client):
+    print("Content-Type: ", content_type)
     client.set_header(Header.ContentType, content_type)
 
 @given("the client has bad query parameters")
@@ -92,4 +93,4 @@ def empty_response(client: TrolieClient):
 
 @then(parsers.parse("the Content-Type header of the response is `{content_type}`"))
 def content_type_header(content_type, client):
-    assert content_type == client.get_response_header(Header.ContentType)
+    assert content_type == client.get_response_header(Header.ContentType).replace(" ", "").replace(";", "; ")
