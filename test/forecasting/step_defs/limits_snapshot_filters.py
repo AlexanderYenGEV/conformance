@@ -20,6 +20,19 @@ def set_clearinghouse_time_to_user_time(client: TrolieClient):
 def set_historical_forecast_period(period_requested, client: TrolieClient):
     return client.request(f"limits/forecast-snapshot/{period_requested}")
 
+@given(parsers.parse("the period requested is set to {period_requested}"))
+def set_historical_forecast_period(period_requested, client: TrolieClient):
+    return client.request(f"limits/forecast-snapshot/{period_requested}")
+    
+@when(parsers.parse("the client requests historical forecast limits with `offset-period-start` for an hour from then at {request_offset_time}"))
+def historical_forecast_snapshot_request_filter_offset_period_start(request_offset_time, client: TrolieClient):
+    client.set_query_param("offset-period-start", get_todays_iso8601_for(request_offset_time))
+    get_historical_limits_forecast_snapshot(client)
+
+@when(parsers.parse("the client requests regional forecast limits with `offset-period-start` for an hour from then at {request_offset_time}"))
+def regional_forcast_snapshot_request_filter_offset_period_start(request_offset_time, client: TrolieClient):
+    client.set_query_param("offset-period-start", get_todays_iso8601_for(request_offset_time))
+    get_regional_limits_forecast_snapshot(client)
 
 
 @when(parsers.parse("the client requests forecast limits with `offset-period-start` set to {offset_hours} after the current time"))
@@ -110,8 +123,6 @@ def regional_forecast_snapshot_request_filter_resource_id(resource_id, client: T
     client.set_query_param("resource-id", resource_id)
     get_regional_limits_forecast_snapshot(client)
 
-
-
 @then(parsers.parse("the response should include only forecast limits beginning at the current time plus {offset_hours}, in the server's time zone"))
 def forecast_snapshot_request_first_period_starts_on(offset_hours, client: TrolieClient):
     offset = timedelta(hours=int(offset_hours))
@@ -135,9 +146,7 @@ def forecast_snapshot_request_last_period_includes(offset_hours, client: TrolieC
     for resource_id, period_end in targets:
         print("Period end: ", period_end)
         assert parser.isoparse(rounded_expected_end) == parser.isoparse(period_end), f"Failed for resource {resource_id}"
-
-
-
+        
 @then(parsers.parse("the response should include only static forecast limits"))
 def forecast_snapshot_request_only_static(client: TrolieClient):
     limits = client.get_json()["limits"]

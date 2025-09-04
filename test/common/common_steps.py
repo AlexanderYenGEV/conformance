@@ -24,6 +24,10 @@ def set_accept_encoding_header(compression_type, client):
 def set_content_header(request_type, client):
     client.set_header(Header.ContentType, request_type)
 
+@given(parsers.parse("the Content-type header is set to `{content_type}`"))
+def set_content_header(content_type, client):
+    client.set_header(Header.ContentType, content_type)
+
 @given("the client has bad query parameters")
 def bad_query_parameters(client: TrolieClient):
     client.set_query_param("bad", "value")
@@ -39,11 +43,6 @@ def set_body_from_file(client: TrolieClient, filename):
     with open(filename, "r") as f:
         body = json.load(f)
     client.set_body(body)
-
-@given(parsers.parse("the request body is a valid {request_type}"))
-def validate_request_body(client: TrolieClient, request_type):
-    # todo
-    return
 
 @then("the response is 202 OK")
 def request_forecast_limits_snapshot(client: TrolieClient):

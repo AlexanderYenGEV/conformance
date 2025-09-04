@@ -27,7 +27,6 @@ Feature: Provide forecast proposal limits in appropriate formats
   Scenario Outline: Submit a forecast proposal
     Given the Content-type header is set to `<request_type>`
     And the body is loaded from `<file_name>` 
-    And the request body is a valid <request_type>
     When the client submits a Forecast Proposal
     Then the response is 202 OK 
     And the Content-Type header of the response is `<response_type>`

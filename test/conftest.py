@@ -5,11 +5,11 @@ from test.helpers import Role, TrolieClient
 
 from glob import glob
 
-
 pytest_plugins = [
     "test.common.common_steps",
     "test.forecasting.step_defs"
 ]
+
 
 
 def pytest_bdd_apply_tag(tag, function):
