@@ -15,7 +15,7 @@ Feature: Provide forecast proposal limits in appropriate formats
     Given the Accept header is set to `<content_type>`
     When the client requests the status of a Forecast Proposal
     Then the response is 200 OK 
-    And the Content-Type header in the response is `<content_type>`
+    And the Content-Type header of the response is `<content_type>`
     And the response is schema-valid
   
     
@@ -25,14 +25,14 @@ Feature: Provide forecast proposal limits in appropriate formats
 
   # PATCH Submit a Forecast Proposal
   Scenario Outline: Submit a forecast proposal
-    Given the Content-type header is set to `<response_type>`
-    And the body is loaded from `<file_name>`
+    Given the Content-type header is set to `<request_type>`
+    And the body is loaded from `<file_name>` 
     When the client submits a Forecast Proposal
     Then the response is 202 OK 
-    And the Content-Type header in the response is `<response_type>`
+    And the Content-Type header of the response is `<response_type>`
     And the response is schema-valid
 
     Examples: 
-    | content_type                                            | file_name                   | response_type |
+    | request_type                                          | file_name                   | response_type |
     | application/vnd.trolie.rating-forecast-proposal.v1+json | data/forecast_proposal.json | application/vnd.trolie.rating-forecast-proposal-status.v1+json |
     | application/vnd.trolie.rating-forecast-proposal-slim.v1+json; limit-type=apparent-power | data/forecast_proposal_slim.json |

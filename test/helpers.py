@@ -67,6 +67,7 @@ class TrolieClient:
             headers=self.__headers,
             params=self.__query_params,
             json=self.__body,
+            verify=False,  # Disable SSL verification for testing purposes
         )
         return self
 
@@ -109,6 +110,9 @@ class TrolieClient:
 
     def response_is_empty(self) -> bool:
         return len(self.__response.content) == 0
+
+    def get_server_time(self): 
+        return self.__headers["X-TROLIE-Testing-Current-DateTime"]
 
     @dataclass
     class ResponseInfo:
@@ -165,9 +169,9 @@ class TrolieClient:
             return TrolieClient._auth_token_provider
 
         try:
-            import auth_token_provider
-        except ImportError:
-            return None
+            from test import auth_token_provider
+        except ImportError as e: 
+            warning(f"ImportError when importing auth_token_provider: {e}")
 
         for attr_name in dir(auth_token_provider):
             if attr_name == "AuthTokenProvider":
@@ -231,7 +235,7 @@ def load_media_types_from_yaml(file_path: str) -> dict:
     return media_types
 
 
-media_types = load_media_types_from_yaml("/workspace/openapi.yaml")
+media_types = load_media_types_from_yaml("openapi.yaml")
 
 MediaTypes = Enum("MediaTypes", media_types)
 

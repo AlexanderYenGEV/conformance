@@ -173,17 +173,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-.vscode/
-
-.github/gpg.exe
-pytest.ini
-
 # Allure files
 allure-results/
 assets/
-
-# Init files
-test/__init__.py
-test/forecasting/__init__.py
-test/forecasting/step_defs/__init__.py
-test/common/__init__.py
