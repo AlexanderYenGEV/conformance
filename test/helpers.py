@@ -105,6 +105,11 @@ class TrolieClient:
     def get_json(self):
         return self.__response.json()
 
+    def get_header(self, key: Header):
+        if key in self.__headers:
+            return self.__headers[key]
+        return None
+    
     def get_status_code(self) -> int:
         return self.__response.status_code
 

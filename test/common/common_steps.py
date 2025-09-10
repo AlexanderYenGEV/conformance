@@ -53,6 +53,9 @@ def request_forecast_limits_snapshot(client: TrolieClient):
 def request_forecast_limits_snapshot(client: TrolieClient):
     assert client.get_status_code() == 200
 
+@then("the response is 202 OK")
+def response_is_202(client: TrolieClient):
+    assert client.get_status_code() == 202
 
 @then("the response is 304 Not Modified")
 def request_forecast_limits_snapshot_304(client: TrolieClient):
