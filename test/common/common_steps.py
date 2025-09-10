@@ -91,6 +91,6 @@ def empty_response(client: TrolieClient):
     assert client.response_is_empty()
 
 
-@then(parsers.parse("the Content-Type header of the response is `{content_type}`"))
+@then(parsers.parse("the Content-Type header in the response is `{content_type}`"))
 def content_type_header(content_type, client):
     assert content_type == client.get_response_header(Header.ContentType).replace(" ", "").replace(";", "; ")

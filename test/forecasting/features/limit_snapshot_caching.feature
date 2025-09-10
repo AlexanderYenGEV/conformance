@@ -9,6 +9,7 @@ Feature: Caching of Forecast Limits Snapshots supporting conditional GET
 
     Background: Authenticated as a Ratings Provider
         Given a TROLIE client that has been authenticated as a Ratings Provider
+        Given the client is preloaded with a forecast limits snapshot
 
     @prism_fail
     Scenario Outline: Support Conditional GET
@@ -69,3 +70,10 @@ Feature: Caching of Forecast Limits Snapshots supporting conditional GET
             | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json |
             | application/vnd.trolie.forecast-limits-snapshot.v1+json; include-psr-header=false |
             | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json; include-psr-header=false |
+
+
+    # What does this even mean? Does this mean next window/hour or does this mean next proposal submitted
+    # When a new Forecast is available 
+
+    # Assuming the forecasts are independent, the response should be 304 ? Because independent forecast have independent ETags therefore the first snapshot isn't modified
+
