@@ -1,10 +1,14 @@
 from datetime import timedelta, datetime
 from pytest_bdd import given, when, then, parsers
-from test.forecasting.forecast_helpers import get_forecast_limits_snapshot, get_todays_iso8601_for, get_etag
+from test.forecasting.forecast_helpers import get_forecast_limits_snapshot, get_todays_iso8601_for, get_etag, preload_forecast_limits_snapshot_data_helper
 from test.helpers import Header
 
 base_time = datetime.now().astimezone().isoformat()
 
+@given("the client is preloaded with a forecast limits snapshot")
+def preload_forecast_limits_snapshot_data(preload_forecast_limits_snapshot_data_helper):
+    # This step uses the fixture to ensure data is preloaded
+    pass
 
 @given("the client has obtained the current Forecast Limits Snapshot with an ETag", target_fixture="etag")
 def get_etag_for_forecast_limits_snapshot(client):
@@ -32,7 +36,7 @@ def etags_should_not_match(client, etag):
 @when("a new Forecast is available")
 def new_forecast_available(client):
     base_time_dt = datetime.fromisoformat(base_time)
-    client.set_server_time((base_time_dt - timedelta(hours=1)).isoformat())
+    client.set_server_time((base_time_dt + timedelta(hours=2)).isoformat())
     get_forecast_limits_snapshot(client)
     client.send()
 

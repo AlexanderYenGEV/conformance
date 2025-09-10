@@ -15,7 +15,7 @@ Feature: Provide forecast proposal limits in appropriate formats
     Given the Accept header is set to `<content_type>`
     When the client requests the status of a Forecast Proposal
     Then the response is 200 OK 
-    And the Content-Type header of the response is `<content_type>`
+    And the Content-Type header in the response is `<content_type>`
     And the response is schema-valid
   
     
@@ -29,7 +29,7 @@ Feature: Provide forecast proposal limits in appropriate formats
     And the forecast proposal is generated for the current time
     When the client submits a Forecast Proposal
     Then the response is 202 OK 
-    And the Content-Type header of the response is `<response_type>`
+    And the Content-Type header in the response is `<response_type>`
     And the response is schema-valid
 
     Examples: 
