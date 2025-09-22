@@ -9,7 +9,8 @@ Feature: Provide real-time limits in appropriate formats
 
     Background: Authenticated as a Ratings Provider
         Given a TROLIE client that has been authenticated as a Ratings Provider
-    
+        And the client is preloaded with a realtime rating snapshot
+   
     # GET Limits Real-Time Snapshot
     Scenario Outline: Get limits real-time snapshot
         Given the Accept header is set to `<content_type>`
@@ -46,4 +47,6 @@ Feature: Provide real-time limits in appropriate formats
         | application/vnd.trolie.realtime-limits-snapshot-slim.v1+json; limit-type=apparent-power; inputs-used=true |
 
        
-
+# @test_fixture
+#     Scenario: Preload client with real-time ratings proposal data
+#         Given the client is preloaded with a realtime rating snapshot

@@ -9,6 +9,7 @@ Feature: Provide forecast proposal limits in appropriate formats
 
   Background: Authenticated as a Ratings Provider
     Given a TROLIE client that has been authenticated as a Ratings Provider
+    And the client is preloaded with a forecast limits snapshot
 
   # GET Obtain Forecast Proposal Status
   Scenario Outline: Get the forecast proposal status 
