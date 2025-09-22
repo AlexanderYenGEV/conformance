@@ -107,10 +107,12 @@ def preload_forecast_limits_snapshot_data_helper():
 
     client.set_body(payload)
     client.set_header("Content-Type", "application/vnd.trolie.rating-forecast-proposal.v1+json")
-    client.request("/rating-proposals/forecast", method="PATCH")
+    response = client.request("/rating-proposals/forecast", method="PATCH")
     # Job Runner
+    original_url = os.getenv("TROLIE_BASE_URL")
     os.environ["TROLIE_BASE_URL"] = "http://localhost:8081"
     client.request("/lep-jobs/clearing-house/forecast/phase1", method="POST")
-    os.environ["TROLIE_BASE_URL"] = "https://service.env-alex-ingress.local/lep-operations"
+    os.environ["TROLIE_BASE_URL"] = original_url
+    return response
 
 

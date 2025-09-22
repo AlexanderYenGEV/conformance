@@ -1,4 +1,4 @@
-@realtime @caching
+@realtime 
 Feature: Caching of realtime snapshots and proposal supporting conditional GET
 
     As a Clearinghouse Operator
@@ -9,6 +9,7 @@ Feature: Caching of realtime snapshots and proposal supporting conditional GET
 
     Background: Authenticated as a Ratings Provider
         Given a TROLIE client that has been authenticated as a Ratings Provider
+        And the client is preloaded with a realtime rating snapshot
 
 
     Scenario Outline: Real-time proposals support conditional get

@@ -9,7 +9,7 @@ Feature: Caching of Forecast Limits Snapshots supporting conditional GET
 
     Background: Authenticated as a Ratings Provider
         Given a TROLIE client that has been authenticated as a Ratings Provider
-        Given the client is preloaded with a forecast limits snapshot
+        And the client is preloaded with a forecast limits snapshot
 
     @prism_fail
     Scenario Outline: Support Conditional GET

@@ -9,6 +9,7 @@ Feature: Provide forecast limits in appropriate formats
 
   Background: Authenticated as a Ratings Provider
     Given a TROLIE client that has been authenticated as a Ratings Provider
+    And the client is preloaded with a forecast limits snapshot
 
   # GET Limits Forecast Snapshot 
   Scenario Outline: Obtaining the latest forecast snapshot
