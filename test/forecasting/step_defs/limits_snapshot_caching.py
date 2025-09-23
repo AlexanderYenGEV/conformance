@@ -8,10 +8,10 @@ base_time = datetime.now().astimezone().isoformat()
 @given("the client is preloaded with a forecast limits snapshot")
 def preload_forecast_limits_snapshot_data(preload_forecast_limits_snapshot_data_helper):
     response = preload_forecast_limits_snapshot_data_helper
-    if response.get_status_code() == 202:
-        print("Response Status:", response.get_status_code())
+    if response.get_status_code() == 200:
+        print("Successfully generated data with status code: ", response.get_status_code())
     else:
-        print(response.get_json())
+        print("Data was not successfully generated. Status code: ", response.get_status_code())
     pass
 
 @given("the client has obtained the current Forecast Limits Snapshot with an ETag", target_fixture="etag")

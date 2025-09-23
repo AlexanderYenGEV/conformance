@@ -25,7 +25,7 @@ def get_regional_limits_realtime_snapshot(client: TrolieClient):
 
 
 @pytest.fixture(scope="session")
-def     preload_realtime_ratings_proposal_data_helper():
+def preload_realtime_ratings_proposal_data_helper():
     client = TrolieClient(role=Role.RATINGS_PROVIDER)
     start_time = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
     resources = ["HEARN.34562.1", "DOUGLAS.T538.1 IN", "DOUGLAS.T538.1 OUT"]

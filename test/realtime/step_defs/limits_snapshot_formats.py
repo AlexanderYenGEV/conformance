@@ -5,10 +5,10 @@ from test.realtime.realtime_helpers import preload_realtime_ratings_proposal_dat
 @given("the client is preloaded with a realtime rating snapshot")
 def preload_realtime_snapshot(preload_realtime_ratings_proposal_data_helper):
     response = preload_realtime_ratings_proposal_data_helper
-    if response.get_status_code() == 202:
-        print("Response Status:", response.get_status_code())
-    else: 
-        print(response.get_json())
+    if response.get_status_code() == 200:
+        print("Successfully generated data with status code: ", response.get_status_code())
+    else:
+        print("Data was not successfully generated. Status code: ", response.get_status_code())
     pass
 
 @when("the client requests for the current real-time snapshot")
