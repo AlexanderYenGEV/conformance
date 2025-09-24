@@ -9,6 +9,7 @@ pytest_plugins = [
     "test.common.common_steps",
     "test.forecasting.step_defs",
     "test.realtime.step_defs",
+    "test.seasonal.step_defs",
 ]
 
 
