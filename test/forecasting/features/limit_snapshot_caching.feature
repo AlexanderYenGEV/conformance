@@ -1,4 +1,4 @@
-@forecasting
+@forecasting @caching
 Feature: Caching of Forecast Limits Snapshots supporting conditional GET
 
     As a Clearinghouse Operator
@@ -9,6 +9,7 @@ Feature: Caching of Forecast Limits Snapshots supporting conditional GET
 
     Background: Authenticated as a Ratings Provider
         Given a TROLIE client that has been authenticated as a Ratings Provider
+        And the client is preloaded with a forecast limits snapshot
 
     @prism_fail
     Scenario Outline: Support Conditional GET
@@ -17,7 +18,7 @@ Feature: Caching of Forecast Limits Snapshots supporting conditional GET
         And the client has obtained the current Forecast Limits Snapshot with an ETag
         When the client immediately issues a conditional GET for the same resource
         Then the response is 304 Not Modified
-        And the the response is empty
+        And the response is empty
 
         Examples:
             | accept_header                                                                              | accept_encoding |
@@ -40,14 +41,20 @@ Feature: Caching of Forecast Limits Snapshots supporting conditional GET
         | application/vnd.trolie.forecast-limits-snapshot-slim.v1+json; limit-type=apparent-power | application/vnd.trolie.forecast-limits-snapshot-slim.v1+json; limit-type=apparent-power; inputs-used=true |
         | application/vnd.trolie.forecast-limits-snapshot.v1+json                                 | application/vnd.trolie.forecast-limits-snapshot.v1+json; include-psr-header=false                         |
 
-    @todo
     Scenario Outline: Unknown ETag in conditional request results in 200 OK
         Given the Accept header is set to `<accept_header>`
         When the client requests the Forecast Limits Snapshot with an unknown If-None-Match header
-        Then the server should respond with a 200 OK status code
-        And the response should be schema valid
+        Then the response is 200 OK
+        And the response is schema-valid
 
-    @prism_fail
+        Examples:
+            | accept_header |
+            | application/vnd.trolie.forecast-limits-snapshot.v1+json |
+            | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json |
+            | application/vnd.trolie.forecast-limits-snapshot.v1+json; include-psr-header=false |
+            | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json; include-psr-header=false |
+
+    @prism_fail 
     Scenario Outline: ETag changes when data is updated
         Given the Accept header is set to `<content_type>`
         And the client has obtained the current Forecast Limits Snapshot with an ETag
@@ -63,3 +70,10 @@ Feature: Caching of Forecast Limits Snapshots supporting conditional GET
             | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json |
             | application/vnd.trolie.forecast-limits-snapshot.v1+json; include-psr-header=false |
             | application/vnd.trolie.forecast-limits-detailed-snapshot.v1+json; include-psr-header=false |
+
+
+    # What does this even mean? Does this mean next window/hour or does this mean next proposal submitted
+    # When a new Forecast is available 
+
+    # Assuming the forecasts are independent, the response should be 304 ? Because independent forecast have independent ETags therefore the first snapshot isn't modified
+
