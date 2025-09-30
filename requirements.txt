@@ -8,3 +8,4 @@ openapi_schema_validator
 requests
 allure-pytest
 ipykernel
+tzdata
