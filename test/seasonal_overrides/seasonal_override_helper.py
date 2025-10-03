@@ -1,0 +1,62 @@
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+from test.helpers import TrolieClient, Role
+import os, pytest
+
+tz = os.getenv("TZ")
+@pytest.fixture(scope="session")
+def preload_seasonal_override_data_helper():
+    client = TrolieClient(role=Role.RATINGS_PROVIDER)
+    resources = ["PARKHILL.T5.T5", "DOUGLAS.1215.1", "MOSELLE2.34591.1"]
+    created_ids = []
+
+    for rss in resources:
+        start_time = datetime.now(ZoneInfo(tz)).replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
+        end_time = start_time + timedelta(hours=1)
+        body = generate_seasonal_override_body_helper(start_time, end_time, rss)
+        client.set_body(body)
+
+        client.set_header("Content-Type", "application/vnd.trolie.seasonal-override.v1+json")
+        client.request("/seasonal-overrides", method="POST")
+        created_ids.append(client.get_json()["id"])
+    
+    print("Seasonal Overrides created: ", created_ids)
+    yield created_ids
+
+    for id in created_ids:
+        client.request(f"/seasonal-overrides/{id}", method="DELETE")
+
+
+def generate_seasonal_override_body_helper(start_time, end_time, resource_id):
+    response = {
+        "resource": {
+            "resource-id": resource_id
+        },
+        "start-time": start_time.isoformat(),
+        "end-time": end_time.isoformat(),
+        "continuous-operating-limit": {
+            "mva": 330
+        },
+        "emergency-operating-limits": [
+            {
+                "duration-name": "EMERG",
+                "limit": {
+                    "mva": 350
+                }
+            },
+            {
+                "duration-name": "LDSHD",
+                "limit": {
+                    "mva": 450
+                }
+            },
+            {
+                "duration-name": "DAL",
+                "limit": {
+                    "mva": 510
+                }
+            }
+        ],
+        "reason": "reason for seasonal override"
+    }
+    return response

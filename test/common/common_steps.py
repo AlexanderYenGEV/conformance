@@ -45,17 +45,25 @@ def set_body_from_file(client: TrolieClient, filename):
         body = json.load(f)
     client.set_body(body)
 
-@then("the response is 202 OK")
-def request_forecast_limits_snapshot(client: TrolieClient):
-    assert client.get_status_code() == 202
+
 
 @then("the response is 200 OK")
 def request_forecast_limits_snapshot(client: TrolieClient):
     assert client.get_status_code() == 200
 
+@then("the response is 201 OK")
+def response_is_201(client: TrolieClient):
+    assert client.get_status_code() == 201
+
 @then("the response is 202 OK")
 def response_is_202(client: TrolieClient):
     assert client.get_status_code() == 202
+
+@then("the response is 204 No Content")
+def response_is_204(client: TrolieClient):
+    assert client.get_status_code() == 204
+    assert client.response_is_empty()
+    assert client.get_response_header(Header.ContentType) is None
 
 @then("the response is 304 Not Modified")
 def request_forecast_limits_snapshot_304(client: TrolieClient):
