@@ -42,7 +42,7 @@ Feature: Provide seasonal overrides rating in appropriate formats
         When the client requests for a seasonal override by its id
         Then the response is 200 OK
         And the Content-Type header in the response is `<content_type>`
-        #And the response is schema-valid
+        And the response is schema-valid
         
         Examples:
         | content_type |
