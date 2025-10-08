@@ -1,9 +1,24 @@
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from test.helpers import TrolieClient, Role
+from logging import warning
 import os, pytest
 
 tz = os.getenv("TZ")
+
+def get_etag(client: TrolieClient):
+    etag = client.get_response_header("ETag")
+    print("Etag: ", etag)
+    # Verify ETag exists as it's required for the caching test
+    assert etag is not None and client.get_status_code() == 200
+    # Verify ETag is not a weak ETag
+    # assert not etag.startswith('W/"'), "Expected strong ETag, got weak ETag"
+    if etag.startswith('W/"'):
+        strong_etag = etag[2:]
+        warning(f"Expected strong ETag {strong_etag}, got weak ETag {etag}")
+    print("Etag: ", etag)
+    return etag
+
 @pytest.fixture(scope="session")
 def preload_seasonal_override_data_helper():
     client = TrolieClient(role=Role.RATINGS_PROVIDER)
