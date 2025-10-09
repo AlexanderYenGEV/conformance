@@ -102,6 +102,10 @@ class TrolieClient:
                 return int(value) if value.isdigit() else value
         return None
 
+    def get_query_param(self, key: str) -> str:
+        if key in self.__query_params:
+            return self.__query_params[key]
+
     def get_json(self):
         return self.__response.json()
 

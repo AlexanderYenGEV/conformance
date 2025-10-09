@@ -29,6 +29,12 @@ def set_content_header(content_type, client):
     print("Content-Type: ", content_type)
     client.set_header(Header.ContentType, content_type)
 
+@given(parsers.parse("the Content-type header is set to `{content_type}`"))
+def set_content_header(content_type, client):
+    print("Content-Type: ", content_type)
+    client.set_header(Header.ContentType, content_type)
+
+
 @given("the client has bad query parameters")
 def bad_query_parameters(client: TrolieClient):
     client.set_query_param("bad", "value")
@@ -86,6 +92,11 @@ def request_forecast_limits_snapshot_415(client: TrolieClient):
 def request_forecast_limits_snapshot_406(client: TrolieClient):
     assert client.get_status_code() == 406
 
+@then("the response is 409 Conflict: Temporary AAR Exception in use")
+@then("the response is 409 Conflict: Temporary AAR Exception in the past")
+@then("the response is 409 Conflict: Temporary AAR Exception has overlapping times")
+def response_is_409(client: TrolieClient):
+    assert client.get_status_code() == 409
 
 @then("the response is schema-valid")
 def valid_snapshot(client: TrolieClient):
