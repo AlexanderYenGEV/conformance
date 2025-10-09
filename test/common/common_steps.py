@@ -1,3 +1,4 @@
+import json
 from pytest_bdd import given, then, parsers
 from test.helpers import Header, TrolieClient, Role
 
@@ -19,6 +20,14 @@ def set_accept_header(content_type, client):
 def set_accept_encoding_header(compression_type, client):
     client.set_header(Header.Accept_Encoding, compression_type)
 
+@given(parsers.parse("the Content-type header is set to `{request_type}`"))
+def set_content_header(request_type, client):
+    client.set_header(Header.ContentType, request_type)
+
+@given(parsers.parse("the Content-type header is set to `{content_type}`"))
+def set_content_header(content_type, client):
+    print("Content-Type: ", content_type)
+    client.set_header(Header.ContentType, content_type)
 
 @given(parsers.parse("the Content-type header is set to `{content_type}`"))
 def set_content_header(content_type, client):
@@ -36,22 +45,31 @@ def non_empty_body(client: TrolieClient):
     client.set_body({"key": "value"})
     client.set_header("Content-Type", "application/json")
 
+@given(parsers.parse("the body is loaded from `{filename}`"))
+def set_body_from_file(client: TrolieClient, filename):
+    with open(filename, "r") as f:
+        body = json.load(f)
+    client.set_body(body)
+
+
 
 @then("the response is 200 OK")
 def request_forecast_limits_snapshot(client: TrolieClient):
     assert client.get_status_code() == 200
 
 @then("the response is 201 OK")
-def request_forecast_limits_snapshot(client: TrolieClient):
+def response_is_201(client: TrolieClient):
     assert client.get_status_code() == 201
 
 @then("the response is 202 OK")
 def response_is_202(client: TrolieClient):
     assert client.get_status_code() == 202
 
-@then("the response is 204 OK")
-def response_is_202(client: TrolieClient):
+@then("the response is 204 No Content")
+def response_is_204(client: TrolieClient):
     assert client.get_status_code() == 204
+    assert client.response_is_empty()
+    assert client.get_response_header(Header.ContentType) is None
 
 @then("the response is 304 Not Modified")
 def request_forecast_limits_snapshot_304(client: TrolieClient):
@@ -97,4 +115,4 @@ def empty_response(client: TrolieClient):
 
 @then(parsers.parse("the Content-Type header in the response is `{content_type}`"))
 def content_type_header(content_type, client):
-    assert content_type == client.get_response_header(Header.ContentType)
+    assert content_type == client.get_response_header(Header.ContentType).replace(" ", "").replace(";", "; ")
