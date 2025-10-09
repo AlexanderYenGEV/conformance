@@ -1,3 +1,4 @@
+@seasonal_overrides @auth
 Feature: All seasonal override ratings requests require authentication
     As a Clearinghouse Operator
     I want to ensure that requests that cannot be authenticated receive 401 Unauthorized
@@ -9,4 +10,28 @@ Feature: All seasonal override ratings requests require authentication
     Background:
         Given a TROLIE client that has not been authenticated
 
-    Scenario Outline: Attempt to access seasonal overrides ratings without authentication
+    Scenario Outline: Get seasonal overrides
+        When the client requests the current seasonal override
+        Then the response is Unauthorized
+        And the response is empty
+
+    Scenario Outline: Create new seasonal overrides
+        Given an empty body and no Content-Type specified
+        When the client creates a new seasonal override
+        Then the response is Unauthorized
+        And the response is empty
+
+    Scenario Outline: Get seasonal overrides by ID
+        When the client requests for a seasonal override with unknown id
+        Then the response is Unauthorized
+        And the response is empty
+
+    Scenario Outline: Delete seasonal override by ID
+        When the client deletes a seasonal override with unknown id
+        Then the response is Unauthorized
+        And the response is empty
+
+    Scenario Outline: Update seasonal override by ID
+        When the client updates a seasonal override with unknown id
+        Then the response is Unauthorized
+        And the response is empty

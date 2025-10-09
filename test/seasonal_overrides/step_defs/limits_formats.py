@@ -65,3 +65,18 @@ def request_seasonal_override_by_id(client: TrolieClient, preload_seasonal_overr
 @when(parsers.parse("the client updates an existing seasonal override by its id"))
 def update_seasonal_override_by_id(client: TrolieClient, id):
     return client.request(f"/seasonal-overrides/{id}", method="PUT")
+
+@when(parsers.parse("the client requests for a seasonal override with unknown id"))
+def request_seasonal_override_by_unknown_id(client: TrolieClient):
+    unknown_id = "unknown_id"
+    return client.request(f"/seasonal-overrides/{unknown_id}")
+
+@when(parsers.parse("the client deletes a seasonal override with unknown id"))
+def delete_seasonal_override_with_unknown_id(client: TrolieClient):
+    unknown_id = "unknown_id"
+    return client.request(f"/seasonal-overrides/{unknown_id}", method="DELETE")
+
+@when(parsers.parse("the client updates a seasonal override with unknown id"))
+def update_seasonal_override_with_unknown_id(client: TrolieClient):
+    unknown_id = "unknown_id"
+    return client.request(f"/seasonal-overrides/{unknown_id}", method="PUT")
