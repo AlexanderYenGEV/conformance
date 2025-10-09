@@ -1,4 +1,4 @@
-@seasonal_overrides
+@seasonal_overrides @formats
 Feature: Provide seasonal overrides rating in appropriate formats
 
     As a Clearinghouse Operator

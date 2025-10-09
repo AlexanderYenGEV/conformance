@@ -22,7 +22,7 @@ def get_etag(client: TrolieClient):
 @pytest.fixture(scope="session")
 def preload_seasonal_override_data_helper():
     client = TrolieClient(role=Role.RATINGS_PROVIDER)
-    resources = ["PARKHILL.T5.T5" "MOSELLE2.34591.1"]
+    resources = ["PARKHILL.T5.T5", "MOSELLE2.34591.1"]
     created_ids = []
 
     for rss in resources:
