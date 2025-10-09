@@ -11,6 +11,7 @@ pytest_plugins = [
     "test.realtime.step_defs",
     "test.seasonal.step_defs",
     "test.monitoring_sets.step_defs",
+    "test.seasonal_overrides.step_defs",
 ]
 
 
