@@ -9,3 +9,5 @@ requests
 allure-pytest
 ipykernel
 tzdata
+nbconvert
+jupyter
