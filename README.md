@@ -35,3 +35,27 @@ used in the tests. To organize those conceptually, we intend to map onto the
 
 Checkout this repo, and open it with VS Code. It is configured with a devcontainer, so you will be prompted to build it and reopen a session with the devcontainer. After the devcontainer is started, there will be a Jupyter server running at `localhost:8888`; instructions for running the various Conformance Profiles will be found there.
 
+### Running Locally
+
+#### Step 1:
+In [`pytest.ini`](./pytest.ini), update the `TROLIE_BASE_URL` variable.
+
+#### Step 2:
+Currently the `TrolieClient` implementation in
+[`test/helpers.py`](test/helpers.py) assumes the use of a bearer token in the
+authorization header. We have provided a hook (see the `AuthTokenProvider`
+protocol in `helpers.py`) for your implementation to return that token.
+
+The simplest way to use that hook is to copy
+[`auth_token_provider_outline.py`](./auth_token_provider_outline.py) to
+`test/auth_token_provider.py` then update all of the `<<change me>>` strings in
+your environment.
+
+In the future we may switch to defining a protocol for `TrolieClient` instead,
+so that users of this conformance suite can control the entire HTTP stack.
+
+#### Step 3:
+Run ```$ pytest -v --capture=tee-sys -q -rA --tb=auto --alluredir=allure-results --clean-alluredir``` in the terminal.
+
+#### Step 4 (Optional):
+In [`Local Conformance_Profile.ipynb`](./Forecasting_Conformance_Profile.ipynb) change `TROLIE_BASE_URL` and `TZ` variables to run the test suite through the jupyter notebook.
