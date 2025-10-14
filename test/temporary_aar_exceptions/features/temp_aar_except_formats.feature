@@ -61,7 +61,7 @@ Feature: Provide Temporary AAR Exceptions in proper format
     Scenario Outline: Delete a specific Temporary AAR Exception by ID that is not in use
         Given a Temporary AAR Exception is generated right now for the resource <resource_id>
         When the client deletes a specific Temporary AAR Exception by id
-        Then the response is 204 OK
+        Then the response is 204 No Content
 
         Examples:
         | resource_id |
@@ -92,7 +92,7 @@ Feature: Provide Temporary AAR Exceptions in proper format
         And the id of the created Temporary AAR Exception is obtained
         And the updated Temporary AAR Exception is generated for the resource <resource_id>
         When the client updates an existing Temporary AAR Exception by id
-        Then the response is 204 OK
+        Then the response is 204 No Content
 
         Examples:
         | resource_id |
