@@ -54,8 +54,11 @@ your environment.
 In the future we may switch to defining a protocol for `TrolieClient` instead,
 so that users of this conformance suite can control the entire HTTP stack.
 
-#### Step 3:
+#### Step 3.1:
 Run ```$ pytest -v --capture=tee-sys -q -rA --tb=auto --alluredir=allure-results --clean-alluredir``` in the terminal.
+
+#### Step 3.2:
+Run ```allure serve allure-results``` to generate the report
 
 #### Step 4 (Optional):
 In [`Local Conformance_Profile.ipynb`](./Forecasting_Conformance_Profile.ipynb) change `TROLIE_BASE_URL` and `TZ` variables to run the test suite through the jupyter notebook.
