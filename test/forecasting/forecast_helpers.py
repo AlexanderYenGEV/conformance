@@ -110,7 +110,8 @@ def preload_forecast_limits_snapshot_data_helper():
     response = client.request("/rating-proposals/forecast", method="PATCH")
     # Job Runner
     original_url = os.getenv("TROLIE_BASE_URL")
-    os.environ["TROLIE_BASE_URL"] = "http://localhost:8081"
+    job_runner_url = os.getenv("LEP_JOB_RUNNER_URL", "http://localhost:8081")
+    os.environ["TROLIE_BASE_URL"] = job_runner_url
     client.request("/lep-jobs/clearing-house/forecast/phase1", method="POST")
     os.environ["TROLIE_BASE_URL"] = original_url
     return response
