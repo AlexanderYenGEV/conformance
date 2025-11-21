@@ -54,11 +54,28 @@ your environment.
 In the future we may switch to defining a protocol for `TrolieClient` instead,
 so that users of this conformance suite can control the entire HTTP stack.
 
-#### Step 3.1:
+#### Step 3:
+Build the LEP cluster and update host files.
+
+#### Step 3.1: 
+Generate admin-api-client.yaml for [`auth_token_provider_outline.py`](./auth_token_provider_outline.py)
+
+#### Step 4.1:
 Run ```$ pytest -v --capture=tee-sys -q -rA --tb=auto --alluredir=allure-results --clean-alluredir``` in the terminal.
 
-#### Step 3.2:
+#### Step 4.2:
 Run ```allure serve allure-results``` to generate the report
 
-#### Step 4 (Optional):
+#### Step 5 (Optional):
 In [`Local Conformance_Profile.ipynb`](./Forecasting_Conformance_Profile.ipynb) change `TROLIE_BASE_URL` and `TZ` variables to run the test suite through the jupyter notebook.
+
+### Running in CI Pipeline (For LEP)
+
+#### Step 1: 
+Build the LEP cluster 
+
+#### Step 2: 
+Run TROLIE conformance tests by unchecking every parameter except `deployTrolieConformance` and switching testRunProfile to `manual`
+
+#### Step 3:
+A downloadable .zip file should be created and the Allure plugin to should appear, click the Allure plugin button to view the report
